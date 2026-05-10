@@ -1,20 +1,8 @@
 import { createServer, IncomingMessage, Server } from "http";
+import { routeHandler } from "./routes/routes";
 
 const server: Server = createServer((req: IncomingMessage, res) => {
-  //console.log(req.url, req.method);
-  const url = req.url;
-  const method = req.method;
-
-  if (url === "/" && method === "GET") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Hello World" }));
-  } else if (url?.startsWith("/products")) {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "This is product route" }));
-  } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "route not found" }));
-  }
+  routeHandler(req, res);
 });
 
 server.listen(5000, () => {
