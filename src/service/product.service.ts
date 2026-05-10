@@ -7,7 +7,7 @@ export const readProduct = () => {
   //   console.log(filePath);
   const products = fs.readFileSync(filePath, "utf-8");
   //   console.log(products.toString());
-  console.log(products);
-  console.log(JSON.parse(products));
+  //   console.log(products);
+  //   console.log(JSON.parse(products));
   return JSON.parse(products);
 };
