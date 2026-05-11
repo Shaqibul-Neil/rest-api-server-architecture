@@ -68,5 +68,12 @@
     "price": 1000,
     "description": "Product 10 description",
     "category": "Category 1"
+  },
+  {
+    "id": 1778481827774,
+    "name": "Product 11",
+    "price": 1000,
+    "description": "Product 11 description",
+    "category": "Category 11"
   }
 ]

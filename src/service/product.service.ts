@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import type { IProduct } from "../types/product.types";
 
 const filePath = path.join(process.cwd(), "./src/database/db.json");
 
@@ -10,4 +11,8 @@ export const readProduct = () => {
   //   console.log(products);
   //   console.log(JSON.parse(products));
   return JSON.parse(products);
+};
+
+export const insertProduct = (product: IProduct) => {
+  fs.writeFileSync(filePath, JSON.stringify(product));
 };
