@@ -64,8 +64,9 @@ export const productController = async (
   else if ((method === "PUT" || method === "PATCH") && id !== null) {
     const body = await parseBody(req);
     const products = readProduct();
-    const product = products.find((p: IProduct) => p.id === id);
-    if (!product) {
+    const index = products.findIndex((p: IProduct) => p.id === id);
+
+    if (index === -1) {
       res.writeHead(404, { "Content-Type": "application/json" });
       res.end(
         JSON.stringify({
@@ -73,13 +74,38 @@ export const productController = async (
         }),
       );
     } else {
-      const updatedProduct = {
-        ...product,
-        body,
-      };
-      const index = products.findIndex((p: IProduct) => p.id === id);
-      products[index] = updatedProduct;
+      products[index] = { id: products[index].id, ...body };
       insertProduct(products);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          message: "Product updated successfully",
+          data: products[index],
+        }),
+      );
+    }
+  }
+  //Delete Product
+  else if (method === "DELETE" && id !== null) {
+    const products = readProduct();
+    const index = products.findIndex((p: IProduct) => p.id === id);
+    if (index === -1) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          message: "Product not found",
+        }),
+      );
+    } else {
+      products.splice(index, 1);
+      insertProduct(products);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          message: "Product deleted successfully",
+          data: null,
+        }),
+      );
     }
   }
 };
